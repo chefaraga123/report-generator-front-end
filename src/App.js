@@ -1,22 +1,43 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
 
 function App() {
+  const [matchId, setMatchId] = useState(''); // State to hold the match ID
+  const [report, setReport] = useState(''); // State to hold the match report
+
+  const fetchMatchReport = async () => {
+    try {
+      const response = await fetch(`http://localhost:5000/api/sse?fixtureId=${matchId}`);
+      const data = await response.json();
+      if (response.ok) {
+        setReport(data.digest); // Assuming the response contains matchDigest
+      } else {
+        setReport('Error fetching report: ' + data.error);
+      }
+    } catch (error) {
+      setReport('Error: ' + error.message);
+    }
+  };
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Edit <code>src/App.js</code> and save to reload.
+          Enter Match ID to get the report:
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <input 
+          type="text" 
+          value={matchId} 
+          onChange={(e) => setMatchId(e.target.value)} 
+          placeholder="Match ID" 
+        />
+        <button onClick={fetchMatchReport}>Get Match Report</button>
+        {report && (
+          <div className="match-report">
+            <h2>Match Report:</h2>
+            <p>{report}</p>
+          </div>
+        )}
       </header>
     </div>
   );
