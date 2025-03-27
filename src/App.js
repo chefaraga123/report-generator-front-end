@@ -4,6 +4,8 @@ import './App.css';
 function App() {
   const [matchId, setMatchId] = useState(''); // State to hold the match ID
   const [report, setReport] = useState(''); // State to hold the match report
+  const [goals, setGoals] = useState(''); // State to hold the goals
+  const [cards, setCards] = useState(''); // State to hold the cards
 
   const fetchMatchReport = async () => {
     try {
@@ -11,6 +13,8 @@ function App() {
       const data = await response.json();
       if (response.ok) {
         setReport(data.digest); // Assuming the response contains matchDigest
+        setGoals(data.goals);
+        setCards(data.cards);
       } else {
         setReport('Error fetching report: ' + data.error);
       }
@@ -23,6 +27,18 @@ function App() {
   const renderReport = (reportText) => {
     return reportText.split('. ').map((paragraph, index) => (
       <p key={index}>{paragraph.trim() + (index < reportText.split('. ').length - 1 ? '.' : '')}</p>
+    ));
+  };
+
+  const renderGoals = (goals) => {
+    return goals.map((goal, index) => (
+      <p key={index}>{goal.team} - {goal.goal_scorer} - {goal.goal_time}</p>
+    ));
+  };
+
+  const renderCards = (cards) => {
+    return cards.map((card, index) => (
+      <p key={index}>{card.team} - {card.card_receiver} - {card.card_time}</p>
     ));
   };
 
@@ -51,6 +67,10 @@ function App() {
           <div className="match-report">
             <h2>Match Report:</h2>
             {renderReport(report)}
+            <h2>Goals:</h2>
+            {renderGoals(goals)}
+            <h2>Cards:</h2>
+            {renderCards(cards)}
           </div>
         )}
       </header>
