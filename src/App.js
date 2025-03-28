@@ -8,6 +8,8 @@ function App() {
   const [cards, setCards] = useState(''); // State to hold the cards
   const [homeTeamGoals, setHomeTeamGoals] = useState(''); // State to hold the home team goals
   const [awayTeamGoals, setAwayTeamGoals] = useState(''); // State to hold the away team goals
+  const [homeTeamName, setHomeTeamName] = useState(''); // State to hold the home team name
+  const [awayTeamName, setAwayTeamName] = useState(''); // State to hold the away team name
 
   const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:5004';
   console.log("backendUrl", backendUrl)
@@ -20,8 +22,11 @@ function App() {
         setReport(data.digest); // Assuming the response contains matchDigest
         setGoals(data.goals);
         setCards(data.cards);
+        console.log("data", data)
         setHomeTeamGoals(data.homeTeamGoals);
         setAwayTeamGoals(data.awayTeamGoals);
+        setHomeTeamName(data.homeTeamName);
+        setAwayTeamName(data.awayTeamName);
       } else {
         setReport('Error fetching report: ' + data.error);
       }
@@ -39,18 +44,19 @@ function App() {
 
   const renderGoals = (goals) => {
     return goals.map((goal, index) => (
-      <p key={index}>{goal.team} - {goal.goal_scorer}</p>
+      <p key={index}>{goal.team} - <a href={`https://footium.club/game/players/${goal.goal_scorer_id}`} target="_blank" rel="noopener noreferrer">{goal.goal_scorer}</a></p>
     ));
   };
 
   const renderScore = () => {
-    return `${homeTeamGoals} - ${awayTeamGoals}`;
+    console.log("homeTeamGoals", homeTeamGoals, "awayTeamGoals", awayTeamGoals)
+    return `${homeTeamName} ${homeTeamGoals} - ${awayTeamGoals} ${awayTeamName}`;
   };
 
 
   const renderCards = (cards) => {
     return cards.map((card, index) => (
-      <p key={index}>{card.team} - {card.card_receiver}</p>
+      <p key={index}>{card.team} - <a href={`https://footium.club/game/players/${card.card_receiver_id}`} target="_blank" rel="noopener noreferrer">{card.card_receiver}</a></p>
     ));
   };
 
