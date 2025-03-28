@@ -104,11 +104,11 @@ function App() {
             You can download the report as a .txt file by clicking "Download Report". 
           </p>
           <p>
-            It may take a few seconds to generate the report.
+            It may take as long as 30 seconds to generate the report.
           </p>
         </div>
         <p>Enter Match ID to get the report:</p>
-        <p>This is shown in the URL of the match page: https://footium.club/game/fixtures/live/***yourMatchId***</p>
+        <p>This is shown in the URL of the match page: https://footium.club/game/fixtures/live/<b>yourMatchId</b></p>
         <input 
           type="text" 
           value={matchId} 
