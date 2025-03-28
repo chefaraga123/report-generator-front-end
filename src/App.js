@@ -126,8 +126,10 @@ function App() {
         )}
         {report && (
           <div className="match-report">
-            <button className="download-button" onClick={downloadReport}>Download Report</button>
-            {imageUrl && <img src={imageUrl} alt="Generated Match Scene" />}
+            <div className="report-container">
+              <button className="download-button" onClick={downloadReport}>Download Report</button>
+              {imageUrl && <img src={imageUrl} alt="Generated Match Scene" />}
+            </div>
             <h2>Score: {renderScore()}</h2>
             <h2>Match Report:</h2>
             {renderReport(report)}

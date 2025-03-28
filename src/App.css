@@ -61,22 +61,26 @@
   color: #555; /* Slightly lighter color for the text */
 }
    /* App.css */
-
-.download-button {
-    background-color: #4CAF50; /* Green */
-    border: none;
-    color: white;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
+.report-container {
+  display: flex;
+  flex-direction: column; /* Arrange items in a column */
+  align-items: center; /* Center items horizontally */
+  margin-bottom: 20px; /* Space below the container */
 }
-
+  
+.download-button {
+  background-color: #28a745;
+  color: white;
+  padding: 10px 20px;
+  margin-bottom: 10px; /* Space between button and image */
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s, box-shadow 0.3s;
+}
+  
 .download-button:hover {
-    background-color: #45a049; /* Darker green */
+  background-color: #218838;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
