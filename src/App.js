@@ -6,7 +6,7 @@ function App() {
   const [report, setReport] = useState(''); // State to hold the match report
   const [goals, setGoals] = useState(''); // State to hold the goals
   const [cards, setCards] = useState(''); // State to hold the cards
-  const backendUrl = 'http://localhost:5004';
+  const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:5004';
   console.log("backendUrl", backendUrl)
   
   const fetchMatchReport = async () => {
