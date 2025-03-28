@@ -10,6 +10,7 @@ function App() {
   const [awayTeamGoals, setAwayTeamGoals] = useState(''); // State to hold the away team goals
   const [homeTeamName, setHomeTeamName] = useState(''); // State to hold the home team name
   const [awayTeamName, setAwayTeamName] = useState(''); // State to hold the away team name
+  const [imageUrl, setImageUrl] = useState(''); // State to hold the image URL
 
   const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:5004';
   console.log("backendUrl", backendUrl)
@@ -22,11 +23,11 @@ function App() {
         setReport(data.digest); // Assuming the response contains matchDigest
         setGoals(data.goals);
         setCards(data.cards);
-        console.log("data", data)
         setHomeTeamGoals(data.homeTeamGoals);
         setAwayTeamGoals(data.awayTeamGoals);
         setHomeTeamName(data.homeTeamName);
         setAwayTeamName(data.awayTeamName);
+        setImageUrl(data.imageUrl); // Set the image URL
       } else {
         setReport('Error fetching report: ' + data.error);
       }
@@ -62,6 +63,9 @@ function App() {
 
   const downloadReport = () => {
     const reportContent = `
+      Score: 
+      ${renderScore()}
+    
       Match Report:
       ${report}
 
@@ -123,6 +127,7 @@ function App() {
         {report && (
           <div className="match-report">
             <button className="download-button" onClick={downloadReport}>Download Report</button>
+            {imageUrl && <img src={imageUrl} alt="Generated Match Scene" />}
             <h2>Score: {renderScore()}</h2>
             <h2>Match Report:</h2>
             {renderReport(report)}
