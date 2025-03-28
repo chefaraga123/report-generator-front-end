@@ -6,10 +6,12 @@ function App() {
   const [report, setReport] = useState(''); // State to hold the match report
   const [goals, setGoals] = useState(''); // State to hold the goals
   const [cards, setCards] = useState(''); // State to hold the cards
-
+  const backendUrl = 'http://localhost:5004';
+  console.log("backendUrl", backendUrl)
+  
   const fetchMatchReport = async () => {
     try {
-      const response = await fetch(`http://localhost:5004/api/sse?fixtureId=${matchId}`);
+      const response = await fetch(`${backendUrl}/api/sse?fixtureId=${matchId}`);
       const data = await response.json();
       if (response.ok) {
         setReport(data.digest); // Assuming the response contains matchDigest
@@ -32,14 +34,38 @@ function App() {
 
   const renderGoals = (goals) => {
     return goals.map((goal, index) => (
-      <p key={index}>{goal.team} - {goal.goal_scorer} - {goal.goal_time}</p>
+      <p key={index}>{goal.team} - {goal.goal_scorer}</p>
     ));
   };
 
   const renderCards = (cards) => {
     return cards.map((card, index) => (
-      <p key={index}>{card.team} - {card.card_receiver} - {card.card_time}</p>
+      <p key={index}>{card.team} - {card.card_receiver}</p>
     ));
+  };
+
+  const downloadReport = () => {
+    const reportContent = `
+      Match Report:
+      ${report}
+
+      Goals:
+      ${goals.map(goal => `${goal.team} - ${goal.goal_scorer}`).join('\n')}
+
+      Cards:
+      ${cards.map(card => `${card.team} - ${card.card_receiver}`).join('\n')}
+    `;
+
+    const blob = new Blob([reportContent], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `match_report_${matchId}.txt`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
   };
 
   return (
@@ -71,6 +97,7 @@ function App() {
             {renderGoals(goals)}
             <h2>Cards:</h2>
             {renderCards(cards)}
+            <button onClick={downloadReport}>Download Report</button>
           </div>
         )}
       </header>
