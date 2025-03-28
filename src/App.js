@@ -108,6 +108,7 @@ function App() {
           </p>
         </div>
         <p>Enter Match ID to get the report:</p>
+        <p>This is shown in the URL of the match page: https://footium.club/game/fixtures/live/***yourMatchId***</p>
         <input 
           type="text" 
           value={matchId} 
