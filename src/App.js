@@ -6,6 +6,9 @@ function App() {
   const [report, setReport] = useState(''); // State to hold the match report
   const [goals, setGoals] = useState(''); // State to hold the goals
   const [cards, setCards] = useState(''); // State to hold the cards
+  const [homeTeamGoals, setHomeTeamGoals] = useState(''); // State to hold the home team goals
+  const [awayTeamGoals, setAwayTeamGoals] = useState(''); // State to hold the away team goals
+
   const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:5004';
   console.log("backendUrl", backendUrl)
   
@@ -17,6 +20,8 @@ function App() {
         setReport(data.digest); // Assuming the response contains matchDigest
         setGoals(data.goals);
         setCards(data.cards);
+        setHomeTeamGoals(data.homeTeamGoals);
+        setAwayTeamGoals(data.awayTeamGoals);
       } else {
         setReport('Error fetching report: ' + data.error);
       }
@@ -37,6 +42,11 @@ function App() {
       <p key={index}>{goal.team} - {goal.goal_scorer}</p>
     ));
   };
+
+  const renderScore = () => {
+    return `${homeTeamGoals} - ${awayTeamGoals}`;
+  };
+
 
   const renderCards = (cards) => {
     return cards.map((card, index) => (
@@ -81,7 +91,10 @@ function App() {
             match, including key events and statistics.
           </p>
           <p>
-            You can download the report by clicking the "Download Report". 
+            You can download the report as a .txt file by clicking "Download Report". 
+          </p>
+          <p>
+            It may take a few seconds to generate the report.
           </p>
         </div>
         <p>Enter Match ID to get the report:</p>
@@ -104,6 +117,7 @@ function App() {
         {report && (
           <div className="match-report">
             <button className="download-button" onClick={downloadReport}>Download Report</button>
+            <h2>Score: {renderScore()}</h2>
             <h2>Match Report:</h2>
             {renderReport(report)}
             <h2>Goals:</h2>
