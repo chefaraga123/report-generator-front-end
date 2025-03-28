@@ -92,6 +92,15 @@ function App() {
           placeholder="Match ID" 
         />
         <button onClick={fetchMatchReport}>Get Match Report</button>
+        {matchId && (
+          <a 
+            href={`https://footium.club/game/fixtures/live/${matchId}`} 
+            target="_blank" 
+            rel="noopener noreferrer"
+          >
+            View Match
+          </a>
+        )}
         {report && (
           <div className="match-report">
             <button className="download-button" onClick={downloadReport}>Download Report</button>
