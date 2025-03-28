@@ -80,6 +80,9 @@ function App() {
             from the server and displays it below. The report provides insights into the 
             match, including key events and statistics.
           </p>
+          <p>
+            You can download the report by clicking the "Download Report". 
+          </p>
         </div>
         <p>Enter Match ID to get the report:</p>
         <input 
@@ -91,13 +94,13 @@ function App() {
         <button onClick={fetchMatchReport}>Get Match Report</button>
         {report && (
           <div className="match-report">
+            <button className="download-button" onClick={downloadReport}>Download Report</button>
             <h2>Match Report:</h2>
             {renderReport(report)}
             <h2>Goals:</h2>
             {renderGoals(goals)}
             <h2>Cards:</h2>
             {renderCards(cards)}
-            <button onClick={downloadReport}>Download Report</button>
           </div>
         )}
       </header>
