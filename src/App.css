@@ -47,7 +47,7 @@
   border-radius: 8px; /* Rounded corners */
   padding: 20px; /* Padding inside the report */
   margin-top: 20px; /* Space above the report */
-  max-width: 1200px; /* Limit the width */
+  max-width: 4000px; /* Limit the width */
   text-align: left; /* Align text to the left */
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
 }
