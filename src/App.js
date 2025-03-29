@@ -21,18 +21,27 @@ function App() {
           <Route path="/" element={
             <div className="description-box">
               <h2>How It Works</h2>
-              <p>How It Works
-This tool allows you to generate match reports by entering a Match ID. Once you enter the ID and click "Get Match Report," the app fetches the report from the server and displays it below. The report provides insights into the match, including key events and statistics.
-
-You can download the report as a .txt file by clicking "Download Report".
-
-It may take as long as 30 seconds to generate the report.
-
-Enter Match ID to get the report:
-
-This is shown in the URL of the match page: https://footium.club/game/fixtures/live/yourMatchId
-
-</p>
+              <p>
+                This tool allows you to generate match reports by entering a Match ID. 
+                Once you enter the ID and click "Get Match Report," the app fetches the 
+                report from the server and displays it below. The report provides insights 
+                into the match, including key events and statistics.
+              </p>
+              <p>
+                You can download the report as a .txt file by clicking "Download Report".
+              </p>
+              <p>
+                It may take as long as 30 seconds to generate the report.
+              </p>
+              <p>
+                Enter Match ID to get the report:
+              </p>
+              <p>
+                This is shown in the URL of the match page: 
+                <a href="https://footium.club/game/fixtures/live/yourMatchId" target="_blank" rel="noopener noreferrer">
+                  https://footium.club/game/fixtures/live/yourMatchId
+                </a>
+              </p>
               <input 
                 type="text" 
                 value={matchId} 
