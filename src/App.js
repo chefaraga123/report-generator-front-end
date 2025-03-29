@@ -23,7 +23,7 @@ function App() {
               <h2>How It Works</h2>
               <p>
                 This tool allows you to generate match reports by entering a Match ID. 
-                Once you enter the ID and click "Get Match Report," the app fetches the 
+                Once you enter the ID and click "Get Match Report," the app <b>redirects you to a new page</b> & then fetches the 
                 report from the server and displays it below. The report provides insights 
                 into the match, including key events and statistics.
               </p>
