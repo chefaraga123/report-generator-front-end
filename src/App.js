@@ -68,13 +68,13 @@ function MatchReport() {
   const [homeTeamName, setHomeTeamName] = useState('');
   const [awayTeamName, setAwayTeamName] = useState('');
   const [imageUrl, setImageUrl] = useState('');
+  const [loading, setLoading] = useState(true);
 
   const backendUrl = process.env.REACT_APP_BACKEND_URL || 'http://localhost:5004';
 
   React.useEffect(() => {
     const cachedData = localStorage.getItem(`matchReport-${id}`);
     if (cachedData) {
-      // Use cached data if available
       const data = JSON.parse(cachedData);
       setReport(data.digest);
       setGoals(data.goals || []);
@@ -84,14 +84,15 @@ function MatchReport() {
       setHomeTeamName(data.homeTeamName);
       setAwayTeamName(data.awayTeamName);
       setImageUrl(data.imageUrl);
+      setLoading(false);
     } else {
-      // Fetch data if not in cache
       const fetchMatchReport = async () => {
+        setLoading(true);
         try {
           const response = await fetch(`${backendUrl}/api/sse?fixtureId=${id}`);
           const data = await response.json();
           if (response.ok) {
-            localStorage.setItem(`matchReport-${id}`, JSON.stringify(data)); // Cache the data
+            localStorage.setItem(`matchReport-${id}`, JSON.stringify(data));
             setReport(data.digest);
             setGoals(data.goals || []);
             setCards(data.cards || []);
@@ -105,12 +106,18 @@ function MatchReport() {
           }
         } catch (error) {
           setReport('Error: ' + error.message);
+        } finally {
+          setLoading(false);
         }
       };
 
       fetchMatchReport();
     }
   }, [id]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   const renderGoals = (goals) => {
     if (!Array.isArray(goals)) return null;
