@@ -90,6 +90,7 @@ function MatchReport() {
         setLoading(true);
         try {
           const response = await fetch(`${backendUrl}/api/sse?fixtureId=${id}`);
+          console.log("response", response)
           const data = await response.json();
           if (response.ok) {
             localStorage.setItem(`matchReport-${id}`, JSON.stringify(data));
