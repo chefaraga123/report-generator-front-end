@@ -90,9 +90,16 @@ function MatchReport() {
         setLoading(true);
         try {
           const response = await fetch(`${backendUrl}/api/sse?fixtureId=${id}`);
-          console.log("response", response)
-          const data = await response.json();
+          
+          // Check if the response is a CORS response
+          if (response.type === 'cors' && response.ok) {
+            console.log('CORS response received');
+            // Handle CORS response differently if needed
+          }
+
           if (response.ok) {
+            const data = await response.json();
+            console.log("data", data)
             localStorage.setItem(`matchReport-${id}`, JSON.stringify(data));
             setReport(data.digest);
             setGoals(data.goals || []);
@@ -103,7 +110,8 @@ function MatchReport() {
             setAwayTeamName(data.awayTeamName);
             setImageUrl(data.imageUrl);
           } else {
-            setReport('Error fetching report: ' + data.error);
+            const errorData = await response.json();
+            setReport('Error fetching report: ' + errorData.error);
           }
         } catch (error) {
           setReport('Error: ' + error.message);
